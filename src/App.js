@@ -11,7 +11,7 @@ function App() {
       <Header />
       <Search />
       <MovieList />
-      <DeleteMovie />
+      {/* <DeleteMovie /> */}
       <AddMovie />
 
     </div>
