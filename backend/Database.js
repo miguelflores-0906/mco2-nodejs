@@ -8,61 +8,60 @@ const db = mysql.createPool({
     host: 'mco2-stadvdb-node3.mysql.database.azure.com',
     user: 'narwhal_',
     password: 'Qwerty12345',
-    database: 'imdb_ijs'
+    database: 'imdb_ijs',
 });
 
 app.use(cors());
-app.use(express.json())
-app.use(bodyParser.urlencoded({ extended:true}))
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/getAll", (req, res) => {
-    const sqlQuery = "SELECT * FROM movies LIMIT 10"
+app.get('/getAll', (req, res) => {
+    const sqlQuery = 'SELECT * FROM movies LIMIT 10';
     db.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
         }
         return res.send(result);
-    })
+    });
 });
 
-app.post("/addMovie", (req, res) => {
+app.post('/addMovie', (req, res) => {
+    const name = req.body.name;
+    const year = req.body.year;
+    const rank = req.body.rank;
 
-    const name = req.body.name
-    const year = req.body.year
-    const rank = req.body.rank
-
-    const sqlInsert = `INSERT INTO movies VALUES (UUID(), ?, ?, ?)`
-    db.query(sqlInsert, [name, year, rank] ,(err, result) => {
+    const sqlInsert = `INSERT INTO movies VALUES (UUID(), ?, ?, ?)`;
+    db.query(sqlInsert, [name, year, rank], (err, result) => {
         if (err) {
             return console.log(err);
         }
-        res.send("ADDED MOVIE");
+        res.send('ADDED MOVIE');
         return console.log(result);
-    })
-})
+    });
+});
 
-app.get("/search", (req, res) => {
-    const sqlQuery = `SELECT * FROM movies WHERE name like "Spider-man%"`
+app.get('/search', (req, res) => {
+    const sqlQuery = `SELECT * FROM movies WHERE name like "Spider-man%"`;
     db.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
         }
         res.send(result);
         return console.log(result);
-    })
-})
+    });
+});
 
-app.get("/delete", (req, res) => {
-    const sqlQuery = `DELETE FROM movies WHERE name="Spider-man: No Way Home"`
+app.get('/delete', (req, res) => {
+    const sqlQuery = `DELETE FROM movies WHERE name="Spider-man: No Way Home"`;
     db.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
         }
         res.send(result);
         return console.log(result);
-    })
-})
+    });
+});
 
-app.listen(5000, ()=> {
-    console.log("Connected!")
+app.listen(5000, () => {
+    console.log('Connected!');
 });
