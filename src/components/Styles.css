@@ -179,6 +179,7 @@ th {
 }
 
 .add-movie-wrapper {
+    /* position: fixed; */
     margin-left: 5%;
     margin-right: 5%;
     height: 100%;
@@ -340,4 +341,8 @@ th {
 
 .movie-list li {
     list-style: none;
+}
+
+.fa-icon {
+    cursor: pointer;
 }

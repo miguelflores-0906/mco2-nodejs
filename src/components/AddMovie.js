@@ -15,6 +15,10 @@ const AddMovie = () => {
             rank: rank
         }).then(() => {
             alert("Success!");
+            window.location.reload(false);
+        })
+        .catch(err => {
+            console.error(err);
         })
     }
 

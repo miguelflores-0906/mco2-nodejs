@@ -9,6 +9,7 @@ const MovieList = () => {
     const updateMovies = (movieArray) => setMovies(movieArray.data.map((movie, index) => {
       return (
         <Item
+          UUID = {movie.UUID}
           name = {movie.name}
           year = {movie.year}
           rank = {movie.rank}

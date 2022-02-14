@@ -40,6 +40,21 @@ app.post('/addMovie', (req, res) => {
     });
 });
 
+app.post('/deleteThis', (req, res) => {
+    const UUID = req.body.UUID;
+    const name = req.body.name;
+    const year = req.body.year;
+
+    const sqlDelete = `DELETE FROM movies WHERE UUID=? AND name=? AND year=?`;
+    db.query(sqlDelete, [UUID, name, year],(err, result) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.send(result);
+        return console.log(result);
+    });
+});
+
 app.get('/search', (req, res) => {
     const sqlQuery = `SELECT * FROM movies WHERE name like "Spider-man%"`;
     db.query(sqlQuery, (err, result) => {
@@ -51,16 +66,6 @@ app.get('/search', (req, res) => {
     });
 });
 
-app.get('/delete', (req, res) => {
-    const sqlQuery = `DELETE FROM movies WHERE name="Spider-man: No Way Home"`;
-    db.query(sqlQuery, (err, result) => {
-        if (err) {
-            return console.log(err);
-        }
-        res.send(result);
-        return console.log(result);
-    });
-});
 
 app.listen(5000, () => {
     console.log('Connected!');
