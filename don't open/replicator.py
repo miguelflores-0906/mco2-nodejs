@@ -48,7 +48,7 @@ def replicator_thread():
         #read from node 1
         
         try:
-            time.sleep(40)
+        
             conn1 = mysql.connector.connect(**node1)
             if conn1.is_connected():
 
@@ -60,10 +60,10 @@ def replicator_thread():
                 c1.execute(time_tracker)
                 ts = c1.fetchone()[0]
 
-                logs = "SELECT * FROM Logs WHERE `timestamp` >= \"" +str(ts) +"\";"
-                c1.execute(logs)
+                logs = "SELECT * FROM Logs WHERE `timestamp` >=  %s;"
+                c1.execute("SELECT * FROM Logs WHERE `timestamp` >=  %s;",[ts])
                 res = c1.fetchall()
-
+                print("success")
 
                 for i in res:
                     try:
