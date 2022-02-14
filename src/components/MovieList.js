@@ -6,13 +6,26 @@ import Axios from 'axios';
 const MovieList = () => {
     const [movieList, setMovieList] = useState([]);
 
-    const updateMovies = (movieArray) => setMovieList(movieArray.data.map(()));
+    const updateMovies = (movieArray) => setMovies(movieArray.data.map((movie, index) => {
+      return (
+        <Item
+          name = {movie.name}
+          year = {movie.year}
+          rank = {movie.rank}
+          key = {index}
+        />
+      )
+    }));
 
 
     useEffect(() => {
         Axios.get('http://localhost:5000/getAll')
             .then((response) => {
                 console.log(response.data);
+                updateMovies(response)
+            })
+            .catch((err) => {
+              console.error(err);
             });
     }, []);
 

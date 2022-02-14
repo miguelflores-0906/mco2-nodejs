@@ -338,3 +338,6 @@ th {
     cursor: pointer;
 }
 
+.movie-list li {
+    list-style: none;
+}
