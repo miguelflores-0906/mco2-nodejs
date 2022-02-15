@@ -46,7 +46,7 @@ const MovieList = () => {
 
     useEffect(() => {
         console.log('start getting')
-        Axios.get('http://localhost:5000/getAll')
+        Axios.get('http://localhost:process.env.PORT/getAll')
             .then((response) => {
                 console.log(response.data);
                 updateMovies(response)
