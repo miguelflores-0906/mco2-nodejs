@@ -1,9 +1,9 @@
 import React from 'react';
 import './DeletePop.css';
-import Axios from 'axios';
+import app from '../utils/axiosConfig'
 function DeletePopup(props) {
     const deleteThis = () => {
-        Axios.post('http://localhost:5000/deleteThis', {
+        app.post('http://localhost:5000/deleteThis', {
             UUID: props.UUID,
             name: props.name,
             year: props.year,

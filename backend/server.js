@@ -1,8 +1,10 @@
 const express = require('express');
-const app = express();
+const appExp = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+const inProduction = process.env.NODE_ENV === 'production';
 
 const PORT = process.env.PORT || 5000
 
@@ -27,11 +29,16 @@ const dbnode3 = mysql.createPool({
     database: 'imdb_ijs',
 });
 
-app.use(cors());
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+appExp.use(cors());
+appExp.use(express.json());
+appExp.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/getAll', (req, res) => {
+appExp.use(cors({
+    origin: inProduction ? '' : 'http://localhost:3000',
+    credentials: true,
+  }));
+
+appExp.get('/api/getAll', (req, res) => {
     const sqlQuery = 'SELECT * FROM movies LIMIT 50';
     dbnode1.query(sqlQuery, (err, result) => {
         if (err) {
@@ -41,7 +48,7 @@ app.get('/getAll', (req, res) => {
     });
 });
 
-app.post('/addMovie', (req, res) => {
+appExp.post('/api/addMovie', (req, res) => {
     const name = req.body.name;
     const year = req.body.year;
     const rank = req.body.rank;
@@ -56,7 +63,7 @@ app.post('/addMovie', (req, res) => {
     });
 });
 
-app.post('/deleteThis', (req, res) => {
+appExp.post('/api/deleteThis', (req, res) => {
     const UUID = req.body.UUID;
     const name = req.body.name;
     const year = req.body.year;
@@ -75,7 +82,7 @@ app.post('/deleteThis', (req, res) => {
     });
 });
 
-app.post('/search', (req, res) => {
+appExp.post('/api/search', (req, res) => {
     let searchTerm = req.body.searchTerm;
     searchTerm = searchTerm + '%'
     const sqlSearch = "SELECT * FROM movies WHERE `name` like ?"
@@ -88,7 +95,7 @@ app.post('/search', (req, res) => {
     });
 });
 
-app.post('/updateMovie', (req, res) => {
+appExp.post('/api/updateMovie', (req, res) => {
     const UUID = req.body.UUID;
     const name = req.body.name;
     const year = req.body.year;
@@ -105,6 +112,6 @@ app.post('/updateMovie', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+appExp.listen(PORT, () => {
     console.log('Connected!');
 });

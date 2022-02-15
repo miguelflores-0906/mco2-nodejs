@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Styles.css';
 import Item from './Item.js';
-import Axios from 'axios';
+import app from '../utils/axiosConfig'
 
 const MovieList = () => {
     // const [movieList, setMovieList] = useState([]);
@@ -21,7 +21,7 @@ const MovieList = () => {
 
     const searchClick = () => {
         console.log("Searching for " + searchTerm)
-        Axios.post('http://localhost:5000/search', {searchTerm: searchTerm})
+        app.post('http://localhost:5000/search', {searchTerm: searchTerm})
             .then((response) => {
                 console.log(response.data)
                 updateMovies(response)
@@ -33,7 +33,7 @@ const MovieList = () => {
     }
 
     const resetClicks = () => {
-        Axios.get('http://localhost:5000/getAll')
+        app.get('/getAll')
             .then((response) => {
                 console.log(response.data)
                 updateMovies(response)
@@ -45,16 +45,17 @@ const MovieList = () => {
 
 
     useEffect(() => {
-        console.log('start getting')
-        Axios.get('http://localhost:5000/getAll')
+        // console.log('start getting')
+        app.get('/getAll')
             .then((response) => {
+                console.log("i am getting")
                 console.log(response.data);
                 updateMovies(response)
             })
             .catch((err) => {
               console.error(err);
             });
-        console.log('done');
+        // console.log('done');
         }, []);
 
     const [movies, setMovies] = useState("No movies yet here folks!");

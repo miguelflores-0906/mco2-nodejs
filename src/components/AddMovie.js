@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './Styles.css'
-import Axios from "axios"
+import app from '../utils/axiosConfig'
 
 const AddMovie = () => {
 
@@ -9,7 +9,7 @@ const AddMovie = () => {
     const [rank, setRank] = useState("")
 
     const addThisMovie = () => {
-        Axios.post("http://localhost:5000/addMovie", {
+        app.post("http://localhost:5000/addMovie", {
             name: name,
             year: year,
             rank: rank
