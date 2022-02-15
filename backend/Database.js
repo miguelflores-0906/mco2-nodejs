@@ -4,10 +4,24 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const db = mysql.createPool({
+const dbnode1 = mysql.createPool({
     host: 'mc02-node1.mysql.database.azure.com',
     user: 'Wolf',
     password: 'HiJxx8owM9^U9hPU8K',
+    database: 'imdb_ijs',
+});
+
+const dbnode2 = mysql.createPool({
+    host: 'mc02-stadvdb-grp10-node2.mysql.database.azure.com',
+    user: 'Wolf',
+    password: 'Qwerty12345',
+    database: 'imdb_ijs',
+});
+
+const dbnode3 = mysql.createPool({
+    host: 'mc02-stadvdb-node3.mysql.database.azure.com',
+    user: 'narwhal_',
+    password: 'Qwerty12345',
     database: 'imdb_ijs',
 });
 
@@ -17,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/getAll', (req, res) => {
     const sqlQuery = 'SELECT * FROM movies LIMIT 10';
-    db.query(sqlQuery, (err, result) => {
+    dbnode1.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
         }
@@ -31,7 +45,7 @@ app.post('/addMovie', (req, res) => {
     const rank = req.body.rank;
 
     const sqlInsert = `INSERT INTO movies VALUES (UUID(), ?, ?, ?)`;
-    db.query(sqlInsert, [name, year, rank], (err, result) => {
+    dbnode1.query(sqlInsert, [name, year, rank], (err, result) => {
         if (err) {
             return console.log(err);
         }
@@ -46,7 +60,7 @@ app.post('/deleteThis', (req, res) => {
     const year = req.body.year;
 
     const sqlDelete = `DELETE FROM movies WHERE UUID=? AND name=? AND year=?`;
-    db.query(sqlDelete, [UUID, name, year],(err, result) => {
+    dbnode1.query(sqlDelete, [UUID, name, year], (err, result) => {
         if (err) {
             return console.log(err);
         }
@@ -57,7 +71,7 @@ app.post('/deleteThis', (req, res) => {
 
 app.get('/search', (req, res) => {
     const sqlQuery = `SELECT * FROM movies WHERE name like "Spider-man%"`;
-    db.query(sqlQuery, (err, result) => {
+    dbnode1.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
         }
@@ -65,7 +79,6 @@ app.get('/search', (req, res) => {
         return console.log(result);
     });
 });
-
 
 app.listen(5000, () => {
     console.log('Connected!');
