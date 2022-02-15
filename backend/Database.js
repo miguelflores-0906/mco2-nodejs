@@ -59,6 +59,10 @@ app.post('/deleteThis', (req, res) => {
     const name = req.body.name;
     const year = req.body.year;
 
+    console.log(UUID);
+    console.log(name);
+    console.log(year);
+
     const sqlDelete = `DELETE FROM movies WHERE UUID=? AND name=? AND year=?`;
     dbnode1.query(sqlDelete, [UUID, name, year], (err, result) => {
         if (err) {
@@ -86,15 +90,16 @@ app.post('/updateMovie', (req, res) => {
     const year = req.body.year;
     const rank = req.body.rank;
 
-    const sqlUpdate = `UPDATE movies SET name=?, year=?, rank=? WHERE UUID=?`
-    dbnode1.query(sqlUpdate,[name, year, rank, UUID], (err, result) => {
+    const sqlUpdate = `UPDATE movies SET name=?, year=?, rank=? WHERE UUID=?`;
+
+    dbnode1.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
         if (err) {
             return console.log(err);
         }
         res.send(result);
         return console.log(result);
-    })
-})
+    });
+});
 
 app.listen(5000, () => {
     console.log('Connected!');
