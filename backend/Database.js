@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/getAll', (req, res) => {
-    const sqlQuery = 'SELECT * FROM movies LIMIT 10';
+    const sqlQuery = 'SELECT * FROM movies LIMIT 50';
     dbnode1.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
@@ -79,6 +79,22 @@ app.get('/search', (req, res) => {
         return console.log(result);
     });
 });
+
+app.post('/updateMovie', (req, res) => {
+    const UUID = req.body.UUID;
+    const name = req.body.name;
+    const year = req.body.year;
+    const rank = req.body.rank;
+
+    const sqlUpdate = `UPDATE movies SET name=?, year=?, rank=? WHERE UUID=?`
+    dbnode1.query(sqlUpdate,[name, year, rank, UUID], (err, result) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.send(result);
+        return console.log(result);
+    })
+})
 
 app.listen(5000, () => {
     console.log('Connected!');

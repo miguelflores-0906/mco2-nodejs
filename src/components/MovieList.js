@@ -20,6 +20,7 @@ const MovieList = () => {
 
 
     useEffect(() => {
+        console.log('start getting')
         Axios.get('http://localhost:5000/getAll')
             .then((response) => {
                 console.log(response.data);
@@ -28,7 +29,8 @@ const MovieList = () => {
             .catch((err) => {
               console.error(err);
             });
-    }, []);
+        console.log('done');
+        }, []);
 
     const [movies, setMovies] = useState("No movies yet here folks!");
 
