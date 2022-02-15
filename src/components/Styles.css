@@ -36,6 +36,8 @@ body {
 .search-wrapper {
     padding: 0 !important;
     width: 95%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .search {
@@ -183,6 +185,7 @@ th {
     margin-left: 5%;
     margin-right: 5%;
     height: 100%;
+    margin-bottom: 10px;
 }
 
 .add-movie-form {
@@ -251,7 +254,7 @@ th {
     border-radius: 15px;
 
     /* padding: 16px 41px; */
-     float: right;
+    float: right;
     color: #fff;
     font-family: Roboto Mono;
     font-style: normal;
@@ -261,6 +264,25 @@ th {
     user-select: none;
     cursor: pointer;
  
+}
+
+.search-btn {
+    width: 10%;
+    background: #D03900;
+    float: right;
+    border-radius: 15px;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+    font-family: Roboto Mono;
+    font-style: normal;
+    font-weight: normal;
+    border:none;
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .overlay{

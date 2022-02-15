@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 import DeletePopup from './DeletePop';
 import UpdatePopup from './UpdatePop';

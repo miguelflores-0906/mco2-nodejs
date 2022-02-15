@@ -73,14 +73,16 @@ app.post('/deleteThis', (req, res) => {
     });
 });
 
-app.get('/search', (req, res) => {
-    const sqlQuery = `SELECT * FROM movies WHERE name like "Spider-man%"`;
-    dbnode1.query(sqlQuery, (err, result) => {
+app.post('/search', (req, res) => {
+    let searchTerm = req.body.searchTerm;
+    searchTerm = searchTerm + '%'
+    const sqlSearch = "SELECT * FROM movies WHERE `name` like ?"
+    dbnode1.query(sqlSearch, [searchTerm] ,(err, result) => {
         if (err) {
             return console.log(err);
         }
         res.send(result);
-        return console.log(result);
+        return
     });
 });
 

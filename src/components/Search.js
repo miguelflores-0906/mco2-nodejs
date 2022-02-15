@@ -7,10 +7,10 @@ import './Styles.css'
 const Search = () => {
   return (
     <div className="search-wrapper">
-        <input type="text" placeholder="Search a movie..." className="search">
-        </input>
-        {/* TODO: add css */}
-        {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
+        <input type="text" placeholder="Search a movie..." className="search"/>
+        <button className="search-btn">
+          SEARCH
+        </button>
     </div>
   )
 }
