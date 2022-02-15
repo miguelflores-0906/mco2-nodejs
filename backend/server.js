@@ -4,6 +4,8 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const PORT = process.env.PORT || 5000
+
 const dbnode1 = mysql.createPool({
     host: 'mc02-node1.mysql.database.azure.com',
     user: 'Wolf',
@@ -103,6 +105,6 @@ app.post('/updateMovie', (req, res) => {
     });
 });
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log('Connected!');
 });
