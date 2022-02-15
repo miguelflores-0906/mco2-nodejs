@@ -31,6 +31,7 @@ const Item = (props) => {
                     <td>{props.rank}</td>
                     <td>
                         <FontAwesomeIcon icon={faPenToSquare} className="fa-icon"/>
+                             
                         <FontAwesomeIcon icon={faTrash} className="fa-icon" onClick={deleteThis}/>
                     </td>
                 </tr>

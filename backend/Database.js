@@ -5,9 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const db = mysql.createPool({
-    host: 'mco2-stadvdb-node3.mysql.database.azure.com',
-    user: 'narwhal_',
-    password: 'Qwerty12345',
+    host: 'mc02-node1.mysql.database.azure.com',
+    user: 'Wolf',
+    password: 'HiJxx8owM9^U9hPU8K',
     database: 'imdb_ijs',
 });
 
