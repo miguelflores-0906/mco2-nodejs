@@ -9,10 +9,13 @@ import UpdatePopup from './UpdatePop';
 import { useState } from 'react';
 
 const Item = (props) => {
+
+    const newPropName = props.name
+
     const deleteThis = () => {
         Axios.post('http://localhost:5000/deleteThis', {
             UUID: props.UUID,
-            name: props.name,
+            name: {newPropName},
             year: props.year,
         })
             .then(() => {
@@ -32,7 +35,7 @@ const Item = (props) => {
             <div className="item">
                 <table>
                     <tr>
-                        <td>{props.name}</td>
+                        <td>{newPropName}</td>
                         <td>{props.year}</td>
                         <td>{props.rank}</td>
                         <td>
@@ -73,7 +76,13 @@ const Item = (props) => {
                 <input className="input-new-rating" type="text" placeholder="Update Movie Rating"></input>
             </UpdatePopup>
 
-            <DeletePopup trigger={deleteButtonPopup} setTrigger={setdeleteButtonPopup} deletethis={deleteThis}>
+            <DeletePopup
+                trigger = {deleteButtonPopup}
+                setTrigger = {setdeleteButtonPopup}
+                deletethis = {deleteThis}
+                UUID = {props.UUID}
+                name = {props.name}
+                year = {props.year}>
                 <h1>
                     Are you sure you want to delete: <br /> "{props.name}, {props.year}"
                 </h1>
