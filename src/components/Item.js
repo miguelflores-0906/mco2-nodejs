@@ -9,33 +9,34 @@ import UpdatePopup from './UpdatePop';
 import { useState } from 'react';
 
 const Item = (props) => {
-
-    const newPropName = props.name
-
-    const deleteThis = () => {
-        Axios.post('http://localhost:5000/deleteThis', {
-            UUID: props.UUID,
-            name: {newPropName},
-            year: props.year,
-        })
-            .then(() => {
-                window.location.reload(false);
-                // alert("Successfully deleted!");
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    };
+    // const deleteThis = () => {
+    //     Axios.post('http://localhost:5000/deleteThis', {
+    //         UUID: props.UUID,
+    //         name: props.name,
+    //         year: props.year,
+    //     })
+    //         .then(() => {
+    //             window.location.reload(false);
+    //             // alert("Successfully deleted!");
+    //         })
+    //         .catch((err) => {
+    //             console.error(err);
+    //         });
+    // };
 
     const [updateButtonPopup, setUpdateButtonPopup] = useState(false);
     const [deleteButtonPopup, setdeleteButtonPopup] = useState(false);
+
+    const [name, setName] = useState('');
+    const [year, setYear] = useState('');
+    const [rank, setRank] = useState('');
 
     return (
         <li key={props.key}>
             <div className="item">
                 <table>
                     <tr>
-                        <td>{newPropName}</td>
+                        <td>{props.name}</td>
                         <td>{props.year}</td>
                         <td>{props.rank}</td>
                         <td>
@@ -55,7 +56,14 @@ const Item = (props) => {
                 </table>
             </div>
 
-            <UpdatePopup trigger={updateButtonPopup} setTrigger={setUpdateButtonPopup}>
+            <UpdatePopup
+                trigger={updateButtonPopup}
+                setTrigger={setUpdateButtonPopup}
+                UUID={props.UUID}
+                name={name}
+                year={year}
+                rank={rank}
+            >
                 <h1>
                     For the entry of: <br /> "{props.name}, {props.year}"
                 </h1>
@@ -65,24 +73,37 @@ const Item = (props) => {
                     placeholder="Update Movie Title"
                     contentEditable="true"
                     defaultValue={props.name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
                 ></input>
                 <input
                     className="input-new-year"
-                    type="text"
+                    type="number"
                     placeholder="Update Movie Year"
                     contentEditable="true"
                     defaultValue={props.year}
+                    onChange={(e) => {
+                        setYear(e.target.value);
+                    }}
                 ></input>
-                <input className="input-new-rating" type="text" placeholder="Update Movie Rating"></input>
+                <input
+                    className="input-new-rating"
+                    type="number"
+                    placeholder="Update Movie Rating"
+                    onChange={(e) => {
+                        setRank(e.target.value);
+                    }}
+                ></input>
             </UpdatePopup>
 
             <DeletePopup
-                trigger = {deleteButtonPopup}
-                setTrigger = {setdeleteButtonPopup}
-                deletethis = {deleteThis}
-                UUID = {props.UUID}
-                name = {props.name}
-                year = {props.year}>
+                trigger={deleteButtonPopup}
+                setTrigger={setdeleteButtonPopup}
+                UUID={props.UUID}
+                name={props.name}
+                year={props.year}
+            >
                 <h1>
                     Are you sure you want to delete: <br /> "{props.name}, {props.year}"
                 </h1>

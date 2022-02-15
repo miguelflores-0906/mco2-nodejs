@@ -10,8 +10,7 @@ function DeletePopup(props) {
         })
             .then(() => {
                 window.location.reload(false);
-
-                alert(props.name);
+                alert('Successfully deleted!');
             })
             .catch((err) => {
                 console.error(err);
