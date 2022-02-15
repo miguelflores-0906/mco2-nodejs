@@ -13,7 +13,7 @@ const Item = (props) => {
             year: props.year
         }).then(() => {
             window.location.reload(false);
-            alert("Successfully deleted!");
+            // alert("Successfully deleted!");
         })
         .catch(err => {
             console.error(err);

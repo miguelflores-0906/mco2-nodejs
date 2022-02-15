@@ -14,7 +14,7 @@ const AddMovie = () => {
             year: year,
             rank: rank
         }).then(() => {
-            alert("Success!");
+            // alert("Success!");
             window.location.reload(false);
         })
         .catch(err => {
