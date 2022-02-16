@@ -42,43 +42,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/getAll', (req, res) => {
     const sqlQuery = 'SELECT * FROM movies LIMIT 50';
 
-    // dbnode1.query(sqlQuery, (err, result) => {
-    //     if (err) {
-    //         return console.log(err);
-    //     }
-    //     return res.send(result);
-    // });
-
-    // dbnode1.query(sqlQuery, (err, result) => {
-    //     if (err) {
-    //         let node2and3results = [];
-    //         dbnode2.query(sqlQuery, (err, result) => {
-    //             if (err) {
-    //                 return console.log(err);
-    //             }
-    //             node2and3results.concat(result);
-    //         });
-    //         dbnode3.query(sqlQuery, (err, result) => {
-    //             if (err) {
-    //                 return console.log(err);
-    //             }
-    //             node2and3results.concat(result);
-    //         });
-    //         return res.send(node2and3results);
-    //     }
-    //     return res.send(result);
-    // });
-    dbnode2.query(sqlQuery, (err, movies2) => {
-        if (!err) {
-            dbnode3.query(sqlQuery, (err, movies3) => {
+    dbnode1.query(sqlQuery, (err, result) => {
+        if (err) {
+            dbnode2.query(sqlQuery, (err, movies2) => {
                 if (!err) {
-                    let movies = movies2.concat(movies3);
-                    return res.send(movies);
+                    dbnode3.query(sqlQuery, (err, movies3) => {
+                        if (!err) {
+                            let movies = movies2.concat(movies3);
+                            return res.send(movies);
+                        }
+                        return console.log(err);
+                    });
                 }
-                return console.log(err);
+                console.log(err);
             });
         }
-        console.log(err);
+        return res.send(result);
     });
 });
 
@@ -93,7 +72,21 @@ app.post('/addMovie', (req, res) => {
     const sqlInsert = `INSERT INTO movies VALUES (UUID(), ?, ?, ?)`;
     dbnode1.query(sqlInsert, [name, year, rank], (err, result) => {
         if (err) {
-            return console.log(err);
+            if (year >= 1980) {
+                dbnode3.query(sqlInsert, [name, year, rank], (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return res.send(result);
+                });
+            } else {
+                dbnode2.query(sqlInsert, [name, year, rank], (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return res.send(result);
+                });
+            }
         }
         res.send('ADDED MOVIE');
         return console.log(result);
@@ -112,7 +105,21 @@ app.post('/deleteThis', (req, res) => {
     const sqlDelete = `DELETE FROM movies WHERE UUID=? AND name=? AND year=?`;
     dbnode1.query(sqlDelete, [UUID, name, year], (err, result) => {
         if (err) {
-            return console.log(err);
+            if (year >= 1980) {
+                dbnode3.query(sqlDelete, [UUID, name, year], (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return res.send(result);
+                });
+            } else {
+                dbnode2.query(sqlDelete, [UUID, name, year], (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return res.send(result);
+                });
+            }
         }
         res.send(result);
         return console.log(result);
@@ -125,7 +132,18 @@ app.post('/search', (req, res) => {
     const sqlSearch = 'SELECT * FROM movies WHERE `name` like ?';
     dbnode1.query(sqlSearch, [searchTerm], (err, result) => {
         if (err) {
-            return console.log(err);
+            dbnode2.query(sqlSearch, (err, movies2) => {
+                if (!err) {
+                    dbnode3.query(sqlSearch, (err, movies3) => {
+                        if (!err) {
+                            let movies = movies2.concat(movies3);
+                            return res.send(movies);
+                        }
+                        return console.log(err);
+                    });
+                }
+                return console.log(err);
+            });
         }
         res.send(result);
         return;
@@ -146,10 +164,24 @@ app.post('/updateMovie', (req, res) => {
 
     dbnode1.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
         if (err) {
-            return console.log(err);
+            if (year >= 1980) {
+                dbnode3.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return res.send(result);
+                });
+            } else {
+                dbnode2.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return res.send(result);
+                });
+            }
         }
-        res.send(result);
-        return console.log(result);
+
+        return res.send(result);
     });
 });
 
