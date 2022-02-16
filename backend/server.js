@@ -42,23 +42,48 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/getAll', (req, res) => {
     const sqlQuery = 'SELECT * FROM movies LIMIT 50';
 
-    const getData = async () => {
-        const result = await dbnode1.query(sqlQuery);
-        return res.send(result);
-    };
-
-    try {
-        getData(); // async function
-    } catch (error) {
-        console.error(error);
-    }
     // dbnode1.query(sqlQuery, (err, result) => {
     //     if (err) {
     //         return console.log(err);
     //     }
     //     return res.send(result);
     // });
-});
+
+    // dbnode1.query(sqlQuery, (err, result) => {
+    //     if (err) {
+    //         let node2and3results = [];
+    //         dbnode2.query(sqlQuery, (err, result) => {
+    //             if (err) {
+    //                 return console.log(err);
+    //             }
+    //             node2and3results.concat(result);
+    //         });
+    //         dbnode3.query(sqlQuery, (err, result) => {
+    //             if (err) {
+    //                 return console.log(err);
+    //             }
+    //             node2and3results.concat(result);
+    //         });
+    //         return res.send(node2and3results);
+    //     }
+    //     return res.send(result);
+    // });
+
+    let node2and3results = [];
+    dbnode2.query(sqlQuery, (err, result) => {
+        if (err) {
+            return console.log(err);
+        }
+        node2and3results.concat(result);
+    });
+    dbnode3.query(sqlQuery, (err, result) => {
+        if (err) {
+            return console.log(err);
+        }
+        node2and3results.concat(result);
+    });
+    return res.send(node2and3results);
+};);
 
 app.post('/addMovie', (req, res) => {
     let name = req.body.name;
