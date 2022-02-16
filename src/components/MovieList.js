@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Styles.css';
 import Item from './Item.js';
 import Axios from 'axios'
+import app from '../utils/AxiosConfig'
 
 const MovieList = () => {
     // const [movieList, setMovieList] = useState([]);
@@ -21,7 +22,7 @@ const MovieList = () => {
 
     const searchClick = () => {
         console.log("Searching for " + searchTerm)
-        Axios.post('http://localhost:5000/search', {searchTerm: searchTerm})
+        Axios.post('https://imdb-movie-searcher.herokuapp.com/search', {searchTerm: searchTerm})
             .then((response) => {
                 console.log(response.data)
                 updateMovies(response)
@@ -33,7 +34,7 @@ const MovieList = () => {
     }
 
     const resetClicks = () => {
-        Axios.get('http://localhost:5000/getAll')
+        Axios.get('https://imdb-movie-searcher.herokuapp.com/getAll')
             .then((response) => {
                 console.log(response.data)
                 updateMovies(response)
@@ -46,7 +47,7 @@ const MovieList = () => {
 
     useEffect(() => {
         // console.log('start getting')
-        Axios.get('http://localhost:5000/getAll')
+        Axios.get('https://imdb-movie-searcher.herokuapp.com/getAll')
             .then((response) => {
                 console.log("i am getting")
                 console.log(response.data);

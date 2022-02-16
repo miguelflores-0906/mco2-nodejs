@@ -3,6 +3,12 @@ const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const inProduction = process.env.NODE_ENV === 'production';
+
+app.use(cors({
+    origin: inProduction ? '' : 'http://localhost:3000',
+    credentials: true,
+}))
 
 const PORT = process.env.PORT || 5000
 
