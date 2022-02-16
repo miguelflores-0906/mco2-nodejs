@@ -83,7 +83,7 @@ app.get('/getAll', (req, res) => {
         node2and3results.concat(result);
     });
     return res.send(node2and3results);
-};);
+});
 
 app.post('/addMovie', (req, res) => {
     let name = req.body.name;
