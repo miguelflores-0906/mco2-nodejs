@@ -41,12 +41,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/getAll', (req, res) => {
     const sqlQuery = 'SELECT * FROM movies LIMIT 50';
-    dbnode1.query(sqlQuery, (err, result) => {
-        if (err) {
-            return console.log(err);
-        }
+
+    const getData = async () => {
+        const result = await dbnode1.query(sqlQuery);
         return res.send(result);
-    });
+    };
+
+    try {
+        getData(); // async function
+    } catch (error) {
+        console.error(error);
+    }
+    // dbnode1.query(sqlQuery, (err, result) => {
+    //     if (err) {
+    //         return console.log(err);
+    //     }
+    //     return res.send(result);
+    // });
 });
 
 app.post('/addMovie', (req, res) => {
