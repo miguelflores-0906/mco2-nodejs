@@ -258,6 +258,11 @@ app.post('/updateMovie', (req, res) => {
         rank = null;
     }
 
+    console.log(UUID);
+    console.log(name);
+    console.log(year);
+    console.log(rank);
+
     const sqlUpdate = 'UPDATE movies SET `name`=?, `year`=?, `rank`=? WHERE UUID = ?;';
 
     dbnode1.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
