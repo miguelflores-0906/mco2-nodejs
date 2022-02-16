@@ -5,12 +5,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const inProduction = process.env.NODE_ENV === 'production';
 
-app.use(cors({
-    origin: inProduction ? '' : 'http://localhost:3000',
-    credentials: true,
-}))
+app.use(
+    cors({
+        origin: inProduction ? '' : 'http://localhost:3000',
+        credentials: true,
+    })
+);
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
 const dbnode1 = mysql.createPool({
     host: 'mc02-node1.mysql.database.azure.com',
@@ -83,22 +85,26 @@ app.post('/deleteThis', (req, res) => {
 
 app.post('/search', (req, res) => {
     let searchTerm = req.body.searchTerm;
-    searchTerm = '%' + searchTerm + '%'
-    const sqlSearch = "SELECT * FROM movies WHERE `name` like ?"
-    dbnode1.query(sqlSearch, [searchTerm] ,(err, result) => {
+    searchTerm = '%' + searchTerm + '%';
+    const sqlSearch = 'SELECT * FROM movies WHERE `name` like ?';
+    dbnode1.query(sqlSearch, [searchTerm], (err, result) => {
         if (err) {
             return console.log(err);
         }
         res.send(result);
-        return
+        return;
     });
 });
 
 app.post('/updateMovie', (req, res) => {
-    const UUID = req.body.UUID;
-    const name = req.body.name;
-    const year = req.body.year;
-    const rank = req.body.rank;
+    let UUID = req.body.UUID;
+    let name = req.body.name;
+    let year = req.body.year;
+
+    let rank = req.body.rank;
+    if (rank === '') {
+        rank = null;
+    }
 
     const sqlUpdate = 'UPDATE movies SET `name`=?, `year`=?, `rank`=? WHERE UUID = ?;';
 
