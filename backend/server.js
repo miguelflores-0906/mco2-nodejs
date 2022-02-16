@@ -68,16 +68,16 @@ app.get('/getAll', (req, res) => {
     //     }
     //     return res.send(result);
     // });
-
-    // dbnode2.query(sqlQuery, (err, result) => {
-    //     if (err) {
-    //         return console.log(err);
-    //     }
-    //     if (result.length === 0) {
-    //         return console.log('No results from node2');
-    //     }
-    //     let a = result;
-    // });
+    let a;
+    dbnode2.query(sqlQuery, (err, result) => {
+        if (err) {
+            return console.log(err);
+        }
+        if (result.length === 0) {
+            return console.log('No results from node2');
+        }
+        a = result;
+    });
     dbnode3.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
@@ -85,9 +85,9 @@ app.get('/getAll', (req, res) => {
         if (result.length === 0) {
             return console.log('No results from node3');
         }
-        res.send(result);
+        a = a.concat(result);
     });
-    // return res.send([...a, ...b]);
+    return res.send(a);
 });
 
 app.post('/addMovie', (req, res) => {
