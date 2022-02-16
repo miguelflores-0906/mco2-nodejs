@@ -42,42 +42,42 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-async function executeQuery(nodewanted, sqlQuery) {
-    const connection = await getConnectionToNode(nodewanted);
-    connection.query(sqlQuery, (err, result) => {
-        if (err) {
-            console.log(err);
-        }
-        return res.send(result);
-    });
-    connection.release();
-}
+// async function executeQuery(nodewanted, sqlQuery) {
+//     const connection = await getConnectionToNode(nodewanted);
+//     connection.query(sqlQuery, (err, result) => {
+//         if (err) {
+//             console.log(err);
+//         }
+//         return res.send(result);
+//     });
+//     connection.release();
+// }
 
-async function getConnectionToNode(nodewanted) {
-    switch (nodewanted) {
-        case 'NODE 1':
-            return await dbnode1.getConnection();
+// async function getConnectionToNode(nodewanted) {
+//     switch (nodewanted) {
+//         case 'NODE 1':
+//             return await dbnode1.getConnection();
 
-        case 'NODE 2':
-            return await dbnode2.getConnection();
+//         case 'NODE 2':
+//             return await dbnode2.getConnection();
 
-        case 'NODE 3':
-            return await dbnode3.getConnection();
+//         case 'NODE 3':
+//             return await dbnode3.getConnection();
 
-        default:
-            throw 'Node: ' + nodewanted + ' not found';
-    }
-}
+//         default:
+//             throw 'Node: ' + nodewanted + ' not found';
+//     }
+// }
 
 app.get(
     '/getAll',
     (req, res) => {
         const sqlQuery = 'SELECT * FROM movies LIMIT 50';
 
-        let finalResult;
+        // let finalResult;
 
-        let data = await executeQuery('NODE 1', sqlQuery);
-        finalResult = data;
+        // let data = await executeQuery('NODE 1', sqlQuery);
+        // finalResult = data;
         // try {
         //     let data = await executeQuery('NODE 1', sqlQuery);
         //     finalResult = data;
@@ -101,27 +101,27 @@ app.get(
         //         console.error(error);
         //     }
         // }
-        console.log(finalResult);
-        return res.send(finalResult);
+        // console.log(finalResult);
+        // return res.send(finalResult);
 
-        // dbnode1.query(sqlQuery, (err, result) => {
-        //     if (err) {
-        //         dbnode2.query(sqlQuery, (err2, movies2) => {
-        //             if (!err2) {
-        //                 dbnode3.query(sqlQuery, (err3, movies3) => {
-        //                     if (!err3) {
-        //                         let movies = movies2.concat(movies3);
-        //                         return res.send(movies);
-        //                     }
-        //                     return console.log(err3);
-        //                 });
-        //             }
-        //             return console.log(err2);
-        //         });
-        //         return console.log(err);
-        //     }
-        //     return res.send(result);
-        // });
+        dbnode1.query(sqlQuery, (err, result) => {
+            if (err) {
+                dbnode2.query(sqlQuery, (err2, movies2) => {
+                    if (!err2) {
+                        dbnode3.query(sqlQuery, (err3, movies3) => {
+                            if (!err3) {
+                                let movies = movies2.concat(movies3);
+                                return res.send(movies);
+                            }
+                            return console.log(err3);
+                        });
+                    }
+                    return console.log(err2);
+                });
+                return console.log(err);
+            }
+            return res.send(result);
+        });
 
         // dbnode1.getConnection((connecterr, connected) => {
         // if (connecterr) {
