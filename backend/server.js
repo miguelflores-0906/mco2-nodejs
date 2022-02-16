@@ -14,7 +14,7 @@ app.use(
 
 const PORT = process.env.PORT || 5000;
 
-const dbnode1 = mysql.createConnection({
+const dbnode1 = mysql.createPool({
     host: 'mc02-node1.mysql.database.azure.com',
     user: 'Wolf',
     password: 'HiJxx8owM9^U9hPU8K',
@@ -29,7 +29,7 @@ dbnode1.connect((err) => {
     }
 });
 
-const dbnode2 = mysql.createConnection({
+const dbnode2 = mysql.createPool({
     host: 'mc02-stadvdb-grp10-node2.mysql.database.azure.com',
     user: 'gianm',
     password: 'Qwerty12345',
@@ -44,7 +44,7 @@ dbnode2.connect((err) => {
     }
 });
 
-const dbnode3 = mysql.createConnection({
+const dbnode3 = mysql.createPool({
     host: 'mco2-stadvdb-node3.mysql.database.azure.com',
     user: 'narwhal_',
     password: 'Qwerty12345',
