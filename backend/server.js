@@ -47,7 +47,7 @@ app.get('/getAll', (req, res) => {
     });
 });
 
-app.post('/api/addMovie', (req, res) => {
+app.post('/addMovie', (req, res) => {
     const name = req.body.name;
     const year = req.body.year;
     const rank = req.body.rank;
@@ -62,7 +62,7 @@ app.post('/api/addMovie', (req, res) => {
     });
 });
 
-app.post('/api/deleteThis', (req, res) => {
+app.post('/deleteThis', (req, res) => {
     const UUID = req.body.UUID;
     const name = req.body.name;
     const year = req.body.year;
@@ -81,7 +81,7 @@ app.post('/api/deleteThis', (req, res) => {
     });
 });
 
-app.post('/api/search', (req, res) => {
+app.post('/search', (req, res) => {
     let searchTerm = req.body.searchTerm;
     searchTerm = searchTerm + '%'
     const sqlSearch = "SELECT * FROM movies WHERE `name` like ?"
@@ -94,7 +94,7 @@ app.post('/api/search', (req, res) => {
     });
 });
 
-app.post('/api/updateMovie', (req, res) => {
+app.post('/updateMovie', (req, res) => {
     const UUID = req.body.UUID;
     const name = req.body.name;
     const year = req.body.year;
