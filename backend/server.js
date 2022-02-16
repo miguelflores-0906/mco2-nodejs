@@ -44,17 +44,17 @@ app.get('/getAll', (req, res) => {
 
     dbnode1.query(sqlQuery, (err, result) => {
         if (err) {
-            dbnode2.query(sqlQuery, (err, movies2) => {
-                if (!err) {
-                    dbnode3.query(sqlQuery, (err, movies3) => {
-                        if (!err) {
+            dbnode2.query(sqlQuery, (err2, movies2) => {
+                if (!err2) {
+                    dbnode3.query(sqlQuery, (err3, movies3) => {
+                        if (!err3) {
                             let movies = movies2.concat(movies3);
                             return res.send(movies);
                         }
-                        return console.log(err);
+                        return console.log(err3);
                     });
                 }
-                console.log(err);
+                return console.log(err2);
             });
         }
         return res.send(result);
@@ -180,7 +180,6 @@ app.post('/updateMovie', (req, res) => {
                 });
             }
         }
-
         return res.send(result);
     });
 });
