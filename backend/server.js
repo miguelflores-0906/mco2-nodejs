@@ -76,29 +76,32 @@ app.get(
 
         let finalResult;
 
-        try {
-            let data = await executeQuery('NODE 1', sqlQuery);
-            finalResult = data;
-        } catch (error) {
-            console.log('ERROR CONNECTING TO NODE1');
-            console.error(error);
+        let data = await executeQuery('NODE 1', sqlQuery);
+        finalResult = data;
+        // try {
+        //     let data = await executeQuery('NODE 1', sqlQuery);
+        //     finalResult = data;
+        // } catch (error) {
+        //     console.log('ERROR CONNECTING TO NODE1');
+        //     console.error(error);
 
-            try {
-                let data = await executeQuery('NODE 2', sqlQuery);
-                finalResult = data;
-            } catch (error) {
-                console.log('ERROR CONNECTING TO NODE2');
-                console.error(error);
-            }
+        //     try {
+        //         let data = await executeQuery('NODE 2', sqlQuery);
+        //         finalResult = data;
+        //     } catch (error) {
+        //         console.log('ERROR CONNECTING TO NODE2');
+        //         console.error(error);
+        //     }
 
-            try {
-                let data = await executeQuery('NODE 2', sqlQuery);
-                finalResult = finalResult.concat(data);
-            } catch (error) {
-                console.log('ERROR CONNECTING TO NODE3');
-                console.error(error);
-            }
-        }
+        //     try {
+        //         let data = await executeQuery('NODE 2', sqlQuery);
+        //         finalResult = finalResult.concat(data);
+        //     } catch (error) {
+        //         console.log('ERROR CONNECTING TO NODE3');
+        //         console.error(error);
+        //     }
+        // }
+        console.log(finalResult);
         return res.send(finalResult);
 
         // dbnode1.query(sqlQuery, (err, result) => {
@@ -122,28 +125,28 @@ app.get(
 
         // dbnode1.getConnection((connecterr, connected) => {
         // if (connecterr) {
-        dbnode2.getConnection((connecterr2, connected2) => {
-            if (connecterr2) {
-                return console.log(connecterr2);
-            }
-            connected2.query(sqlQuery, (err2, movies2) => {
-                if (err2) {
-                    return console.log(err2);
-                }
-                dbnode3.getConnection((connecterr3, connected3) => {
-                    if (connecterr3) {
-                        return console.log(connecterr3);
-                    }
-                    connected3.query(sqlQuery, (err3, movies3) => {
-                        if (err3) {
-                            return console.log(err3);
-                        }
-                        let movies = movies2.concat(movies3);
-                        return res.send(movies);
-                    });
-                });
-            });
-        });
+        // dbnode2.getConnection((connecterr2, connected2) => {
+        //     if (connecterr2) {
+        //         return console.log(connecterr2);
+        //     }
+        //     connected2.query(sqlQuery, (err2, movies2) => {
+        //         if (err2) {
+        //             return console.log(err2);
+        //         }
+        //         dbnode3.getConnection((connecterr3, connected3) => {
+        //             if (connecterr3) {
+        //                 return console.log(connecterr3);
+        //             }
+        //             connected3.query(sqlQuery, (err3, movies3) => {
+        //                 if (err3) {
+        //                     return console.log(err3);
+        //                 }
+        //                 let movies = movies2.concat(movies3);
+        //                 return res.send(movies);
+        //             });
+        //         });
+        //     });
+        // });
 
         // connected.query(sqlQuery, (quererr1, result) => {
         //     if (quererr1) {
