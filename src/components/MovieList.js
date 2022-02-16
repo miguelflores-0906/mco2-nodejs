@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Styles.css';
 import Item from './Item.js';
-import Axios from 'axios';
+import Axios from 'axios'
 
 const MovieList = () => {
     // const [movieList, setMovieList] = useState([]);
@@ -45,16 +45,17 @@ const MovieList = () => {
 
 
     useEffect(() => {
-        console.log('start getting')
+        // console.log('start getting')
         Axios.get('http://localhost:5000/getAll')
             .then((response) => {
+                console.log("i am getting")
                 console.log(response.data);
                 updateMovies(response)
             })
             .catch((err) => {
               console.error(err);
             });
-        console.log('done');
+        // console.log('done');
         }, []);
 
     const [movies, setMovies] = useState("No movies yet here folks!");
