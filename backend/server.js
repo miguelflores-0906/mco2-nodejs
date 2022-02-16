@@ -14,49 +14,28 @@ app.use(
 
 const PORT = process.env.PORT || 5000;
 
-const dbnode1 = mysql.createConnection({
+const dbnode1 = mysql.createPool({
+    connectionLimit: 10,
     host: 'mc02-node1.mysql.database.azure.com',
     user: 'Wolf',
     password: 'HiJxx8owM9^U9hPU8K',
     database: 'imdb_ijs',
 });
 
-dbnode1.connect((err) => {
-    if (err) {
-        console.log('NODE1 Crashed...');
-    } else {
-        console.log('NODE1 Connected...');
-    }
-});
-
 const dbnode2 = mysql.createConnection({
+    connectionLimit: 10,
     host: 'mc02-stadvdb-grp10-node2.mysql.database.azure.com',
     user: 'gianm',
     password: 'Qwerty12345',
     database: 'imdb_ijs',
 });
 
-dbnode2.connect((err) => {
-    if (err) {
-        console.log('NODE2 Crashed...');
-    } else {
-        console.log('NODE2 Connected...');
-    }
-});
-
 const dbnode3 = mysql.createConnection({
+    connectionLimit: 10,
     host: 'mco2-stadvdb-node3.mysql.database.azure.com',
     user: 'narwhal_',
     password: 'Qwerty12345',
     database: 'imdb_ijs',
-});
-
-dbnode3.connect((err) => {
-    if (err) {
-        console.log('NODE3 Crashed...');
-    } else {
-        console.log('NODE3 Connected...');
-    }
 });
 
 app.use(cors());
