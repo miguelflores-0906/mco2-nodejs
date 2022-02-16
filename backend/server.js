@@ -56,6 +56,7 @@ app.get('/getAll', (req, res) => {
                 }
                 return console.log(err2);
             });
+            return console.log(err);
         }
         return res.send(result);
     });
