@@ -22,7 +22,7 @@ const dbnode1 = mysql.createPool({
     database: 'imdb_ijs',
 });
 
-const dbnode2 = mysql.createConnection({
+const dbnode2 = mysql.createPool({
     connectionLimit: 10,
     host: 'mc02-stadvdb-grp10-node2.mysql.database.azure.com',
     user: 'gianm',
@@ -30,7 +30,7 @@ const dbnode2 = mysql.createConnection({
     database: 'imdb_ijs',
 });
 
-const dbnode3 = mysql.createConnection({
+const dbnode3 = mysql.createPool({
     connectionLimit: 10,
     host: 'mco2-stadvdb-node3.mysql.database.azure.com',
     user: 'narwhal_',
