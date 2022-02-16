@@ -50,9 +50,12 @@ app.get('/getAll', (req, res) => {
 });
 
 app.post('/addMovie', (req, res) => {
-    const name = req.body.name;
-    const year = req.body.year;
-    const rank = req.body.rank;
+    let name = req.body.name;
+    let year = req.body.year;
+    let rank = req.body.rank;
+    if (rank === '') {
+        rank = null;
+    }
 
     const sqlInsert = `INSERT INTO movies VALUES (UUID(), ?, ?, ?)`;
     dbnode1.query(sqlInsert, [name, year, rank], (err, result) => {
