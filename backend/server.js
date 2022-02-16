@@ -265,19 +265,19 @@ app.post('/updateMovie', (req, res) => {
 
     const sqlUpdate = 'UPDATE movies SET `name`=?, `year`=?, `rank`=? WHERE UUID = ?;';
 
-    dbnode1.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
-        if (err) {
+    dbnode1.query(sqlUpdate, [name, year, rank, UUID], (err1, result) => {
+        if (err1) {
             if (year >= 1980) {
-                dbnode3.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
-                    if (err) {
-                        console.log(err);
+                dbnode3.query(sqlUpdate, [name, year, rank, UUID], (err3, result2) => {
+                    if (err3) {
+                        return console.log(err3);
                     }
                     return res.send(result);
                 });
             } else {
-                dbnode2.query(sqlUpdate, [name, year, rank, UUID], (err, result) => {
-                    if (err) {
-                        console.log(err);
+                dbnode2.query(sqlUpdate, [name, year, rank, UUID], (err2, result) => {
+                    if (err2) {
+                        return console.log(err2);
                     }
                     return res.send(result);
                 });
