@@ -22,7 +22,7 @@ const MovieList = () => {
 
     const searchClick = () => {
         console.log("Searching for " + searchTerm)
-        Axios.post('https://imdb-movie-searcher.herokuapp.com/search', {searchTerm: searchTerm})
+        Axios.post('https://localhost:5000/search', {searchTerm: searchTerm})
             .then((response) => {
                 console.log(response.data)
                 updateMovies(response)
@@ -34,7 +34,7 @@ const MovieList = () => {
     }
 
     const resetClicks = () => {
-        Axios.get('https://imdb-movie-searcher.herokuapp.com/getAll')
+        Axios.get('https://localhost:5000/getAll')
             .then((response) => {
                 console.log(response.data)
                 updateMovies(response)
@@ -47,7 +47,7 @@ const MovieList = () => {
 
     useEffect(() => {
         // console.log('start getting')
-        Axios.get('https://imdb-movie-searcher.herokuapp.com/getAll')
+        Axios.get('https://localhost:5000/getAll')
             .then((response) => {
                 console.log("i am getting")
                 console.log(response.data);
