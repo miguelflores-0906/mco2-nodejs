@@ -69,7 +69,6 @@ app.get('/getAll', (req, res) => {
     //     return res.send(result);
     // });
 
-    let node2and3results = [];
     dbnode2.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
@@ -77,7 +76,7 @@ app.get('/getAll', (req, res) => {
         if (result.length === 0) {
             return console.log('No results from node2');
         }
-        node2and3results.concat(result);
+        let node2and3results = result;
     });
     dbnode3.query(sqlQuery, (err, result) => {
         if (err) {
