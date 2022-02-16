@@ -83,7 +83,7 @@ app.post('/deleteThis', (req, res) => {
 
 app.post('/search', (req, res) => {
     let searchTerm = req.body.searchTerm;
-    searchTerm = searchTerm + '%'
+    searchTerm = '%' + searchTerm + '%'
     const sqlSearch = "SELECT * FROM movies WHERE `name` like ?"
     dbnode1.query(sqlSearch, [searchTerm] ,(err, result) => {
         if (err) {
