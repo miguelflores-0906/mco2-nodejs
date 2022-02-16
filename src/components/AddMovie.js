@@ -9,7 +9,7 @@ const AddMovie = () => {
     const [rank, setRank] = useState("")
 
     const addThisMovie = () => {
-        Axios.post("http://localhost:5000/addMovie", {
+        Axios.post("https://imdb-movie-searcher.herokuapp.com/addMovie", {
             name: name,
             year: year,
             rank: rank

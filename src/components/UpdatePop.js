@@ -5,7 +5,7 @@ import Axios from 'axios';
 
 function UpdatePopup(props) {
     const updateThis = () => {
-        Axios.post('http://localhost:5000/updateMovie', {
+        Axios.post('https://imdb-movie-searcher.herokuapp.com/updateMovie', {
             UUID: props.UUID,
             name: props.name,
             year: props.year,

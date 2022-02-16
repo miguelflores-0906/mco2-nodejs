@@ -3,7 +3,7 @@ import './DeletePop.css';
 import Axios from 'axios';
 function DeletePopup(props) {
     const deleteThis = () => {
-        Axios.post('http://localhost:5000/deleteThis', {
+        Axios.post('https://imdb-movie-searcher.herokuapp.com/deleteThis', {
             UUID: props.UUID,
             name: props.name,
             year: props.year,
