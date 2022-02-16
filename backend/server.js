@@ -76,7 +76,7 @@ app.get('/getAll', (req, res) => {
         if (result.length === 0) {
             return console.log('No results from node2');
         }
-        let node2and3results = result;
+        let a = result;
     });
     dbnode3.query(sqlQuery, (err, result) => {
         if (err) {
@@ -85,9 +85,9 @@ app.get('/getAll', (req, res) => {
         if (result.length === 0) {
             return console.log('No results from node3');
         }
-        node2and3results.concat(result);
+        let b = result;
     });
-    return res.send(node2and3results);
+    return res.send([...a, ...b]);
 });
 
 app.post('/addMovie', (req, res) => {
