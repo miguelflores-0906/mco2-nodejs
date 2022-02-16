@@ -69,25 +69,19 @@ app.get('/getAll', (req, res) => {
     //     return res.send(result);
     // });
     let a;
-    dbnode2.query(sqlQuery, (err, result) => {
-        if (err) {
-            return console.log(err);
-        }
-        if (result.length === 0) {
-            return console.log('No results from node2');
+    dbnode2.query(sqlQuery, (err, movies2) => {
+        if (!err) {
+            dbnode3.query(sqlQuery, (err, movies3) => {
+                if (!err) {
+                    let movies = movies2.concat(movies3);
+                    res.send(movies);
+                }
+                return console.log(err);
+            });
         }
         a = result;
+        console.log(console.error());
     });
-    dbnode3.query(sqlQuery, (err, result) => {
-        if (err) {
-            return console.log(err);
-        }
-        if (result.length === 0) {
-            return console.log('No results from node3');
-        }
-        a = a.concat(result);
-    });
-    return res.send(a);
 });
 
 app.post('/addMovie', (req, res) => {
