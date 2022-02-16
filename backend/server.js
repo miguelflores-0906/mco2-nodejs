@@ -219,32 +219,37 @@ app.post('/deleteThis', (req, res) => {
                 });
             }
         }
-        res.send(result);
-        return console.log(result);
+
+        return res.send(result);
     });
 });
 
 app.post('/search', (req, res) => {
     let searchTerm = req.body.searchTerm;
     searchTerm = '%' + searchTerm + '%';
-    const sqlSearch = 'SELECT * FROM movies WHERE `name` like ?';
-    dbnode1.query(sqlSearch, [searchTerm], (err, result) => {
+    console.log(searchTerm);
+
+    const sqlSearch = 'SELECT * FROM movies WHERE `name` like ' + searchTerm;
+
+    dbnode1.query(sqlSearch, (err, result) => {
         if (err) {
-            dbnode2.query(sqlSearch, (err, movies2) => {
-                if (!err) {
-                    dbnode3.query(sqlSearch, (err, movies3) => {
-                        if (!err) {
+            console.log('ERROR CONNECTING TO NODE1');
+            dbnode2.query(sqlSearch, (err2, movies2) => {
+                if (!err2) {
+                    dbnode3.query(sqlSearch, (err3, movies3) => {
+                        if (!err3) {
                             let movies = movies2.concat(movies3);
                             return res.send(movies);
                         }
-                        return console.log(err);
+                        console.log('ERROR CONNECTING TO NODE3');
+                        return console.log(err3);
                     });
                 }
-                return console.log(err);
+                console.log('ERROR CONNECTING TO NODE2');
+                return console.log(err2);
             });
         }
-        res.send(result);
-        return;
+        return res.send(result);
     });
 });
 
@@ -268,7 +273,7 @@ app.post('/updateMovie', (req, res) => {
     dbnode1.query(sqlUpdate, [name, year, rank, UUID], (err1, result) => {
         if (err1) {
             if (year >= 1980) {
-                dbnode3.query(sqlUpdate, [name, year, rank, UUID], (err3, result2) => {
+                dbnode3.query(sqlUpdate, [name, year, rank, UUID], (err3, result) => {
                     if (err3) {
                         return console.log(err3);
                     }
