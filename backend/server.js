@@ -23,13 +23,13 @@ const dbnode1 = mysql.createPool({
 
 const dbnode2 = mysql.createPool({
     host: 'mc02-stadvdb-grp10-node2.mysql.database.azure.com',
-    user: 'Wolf',
+    user: 'gianm',
     password: 'Qwerty12345',
     database: 'imdb_ijs',
 });
 
 const dbnode3 = mysql.createPool({
-    host: 'mc02-stadvdb-node3.mysql.database.azure.com',
+    host: 'mco2-stadvdb-node3.mysql.database.azure.com',
     user: 'narwhal_',
     password: 'Qwerty12345',
     database: 'imdb_ijs',
@@ -69,7 +69,7 @@ app.get('/getAll', (req, res) => {
     //     return res.send(result);
     // });
 
-    let node2and3results = [];
+    // let node2and3results = [];
     dbnode2.query(sqlQuery, (err, result) => {
         if (err) {
             return console.log(err);
