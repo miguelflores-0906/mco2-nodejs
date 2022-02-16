@@ -42,62 +42,65 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/getAll', (req, res) => {
-    const sqlQuery = 'SELECT * FROM movies LIMIT 50';
+app.get(
+    '/getAll',
+    (req, res) => {
+        const sqlQuery = 'SELECT * FROM movies LIMIT 50';
 
-    // dbnode1.query(sqlQuery, (err, result) => {
-    //     if (err) {
-    //         dbnode2.query(sqlQuery, (err2, movies2) => {
-    //             if (!err2) {
-    //                 dbnode3.query(sqlQuery, (err3, movies3) => {
-    //                     if (!err3) {
-    //                         let movies = movies2.concat(movies3);
-    //                         return res.send(movies);
-    //                     }
-    //                     return console.log(err3);
-    //                 });
-    //             }
-    //             return console.log(err2);
-    //         });
-    //         return console.log(err);
-    //     }
-    //     return res.send(result);
-    // });
+        // dbnode1.query(sqlQuery, (err, result) => {
+        //     if (err) {
+        //         dbnode2.query(sqlQuery, (err2, movies2) => {
+        //             if (!err2) {
+        //                 dbnode3.query(sqlQuery, (err3, movies3) => {
+        //                     if (!err3) {
+        //                         let movies = movies2.concat(movies3);
+        //                         return res.send(movies);
+        //                     }
+        //                     return console.log(err3);
+        //                 });
+        //             }
+        //             return console.log(err2);
+        //         });
+        //         return console.log(err);
+        //     }
+        //     return res.send(result);
+        // });
 
-    dbnode1.getConnection((connecterr, connected) => {
-        if (connecterr) {
-            dbnode2.getConnection((connecterr2, connected2) => {
-                if (connecterr2) {
-                    return console.log(connecterr2);
+        // dbnode1.getConnection((connecterr, connected) => {
+        // if (connecterr) {
+        dbnode2.getConnection((connecterr2, connected2) => {
+            if (connecterr2) {
+                return console.log(connecterr2);
+            }
+            connected2.query(sqlQuery, (err2, movies2) => {
+                if (err2) {
+                    return console.log(err2);
                 }
-                connected2.query(sqlQuery, (err2, movies2) => {
-                    if (err2) {
-                        return console.log(err2);
+                dbnode3.getConnection((connecterr3, connected3) => {
+                    if (connecterr3) {
+                        return console.log(connecterr3);
                     }
-                    dbnode3.getConnection((connecterr3, connected3) => {
-                        if (connecterr3) {
-                            return console.log(connecterr3);
+                    connected3.query(sqlQuery, (err3, movies3) => {
+                        if (err3) {
+                            return console.log(err3);
                         }
-                        connected3.query(sqlQuery, (err3, movies3) => {
-                            if (err3) {
-                                return console.log(err3);
-                            }
-                            let movies = movies2.concat(movies3);
-                            return res.send(movies);
-                        });
+                        let movies = movies2.concat(movies3);
+                        return res.send(movies);
                     });
                 });
             });
+        });
 
-            connected.query(sqlQuery, (quererr1, result) => {
-                if (quererr1) {
-                    console.log(quererr1);
-                }
-                res.send(result);
-            });
-        }
-    });
-});
+        // connected.query(sqlQuery, (quererr1, result) => {
+        //     if (quererr1) {
+        //         console.log(quererr1);
+        //     }
+        //     res.send(result);
+        // });
+    }
+    // });
+    // }
+);
 
 app.post('/addMovie', (req, res) => {
     let name = req.body.name;
