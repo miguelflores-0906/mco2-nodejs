@@ -74,15 +74,15 @@ app.get('/getAll', (req, res) => {
         if (err) {
             return console.log(err);
         }
-        node2and3results.concat(result);
+        res.send(result);
     });
-    dbnode3.query(sqlQuery, (err, result) => {
-        if (err) {
-            return console.log(err);
-        }
-        node2and3results.concat(result);
-    });
-    return res.send(node2and3results);
+    // dbnode3.query(sqlQuery, (err, result) => {
+    //     if (err) {
+    //         return console.log(err);
+    //     }
+    //     node2and3results.concat(result);
+    // });
+    // return res.send(node2and3results);
 });
 
 app.post('/addMovie', (req, res) => {
