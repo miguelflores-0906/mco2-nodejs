@@ -42,10 +42,64 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+async function executeQuery(nodewanted, sqlQuery) {
+    const connection = await getConnectionToNode(nodewanted);
+    connection.query(sqlQuery, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        return res.send(result);
+    });
+    connection.release();
+}
+
+async function getConnectionToNode(nodewanted) {
+    switch (nodewanted) {
+        case 'NODE 1':
+            return await dbnode1.getConnection();
+
+        case 'NODE 2':
+            return await dbnode2.getConnection();
+
+        case 'NODE 3':
+            return await dbnode3.getConnection();
+
+        default:
+            throw 'Node: ' + nodewanted + ' not found';
+    }
+}
+
 app.get(
     '/getAll',
     (req, res) => {
         const sqlQuery = 'SELECT * FROM movies LIMIT 50';
+
+        let finalResult;
+
+        try {
+            let data = await executeQuery('NODE 1', sqlQuery);
+            finalResult = data;
+        } catch (error) {
+            console.log('ERROR CONNECTING TO NODE1');
+            console.error(error);
+
+            try {
+                let data = await executeQuery('NODE 2', sqlQuery);
+                finalResult = data;
+            } catch (error) {
+                console.log('ERROR CONNECTING TO NODE2');
+                console.error(error);
+            }
+
+            try {
+                let data = await executeQuery('NODE 2', sqlQuery);
+                finalResult = finalResult.concat(data);
+            } catch (error) {
+                console.log('ERROR CONNECTING TO NODE3');
+                console.error(error);
+            }
+        }
+        return res.send(finalResult);
 
         // dbnode1.query(sqlQuery, (err, result) => {
         //     if (err) {
