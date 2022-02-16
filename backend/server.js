@@ -68,19 +68,17 @@ app.get('/getAll', (req, res) => {
     //     }
     //     return res.send(result);
     // });
-    let a;
     dbnode2.query(sqlQuery, (err, movies2) => {
         if (!err) {
             dbnode3.query(sqlQuery, (err, movies3) => {
                 if (!err) {
                     let movies = movies2.concat(movies3);
-                    res.send(movies);
+                    return res.send(movies);
                 }
                 return console.log(err);
             });
         }
-        a = result;
-        console.log(console.error());
+        console.log(err);
     });
 });
 
