@@ -7,6 +7,7 @@ thread_running = True
 stop_event = Event()
 def replicator_thread():
     global thread_running
+
     #setup phase
     node1 = {
         "host": "mc02-node1.mysql.database.azure.com",
@@ -38,7 +39,9 @@ def replicator_thread():
         #what happen if fail?
     # #cursors for each database
     while thread_running:
-
+        conn1 = None
+        conn2 = None
+        conn3 = None
         try:
             conn1 = mysql.connector.connect(**node1)
             c1 = conn1.cursor(buffered = True)
@@ -57,7 +60,7 @@ def replicator_thread():
         except:
             print("Failed to connect to node 3")
 
-        if conn1.is_connected() and conn2.is_connected() and conn3.is_connected():
+        if (conn1 and conn1.is_connected()) and (conn2 and conn2.is_connected()) and (conn3 and conn3.is_connected()):
             try:
                 grabLog = "SELECT * FROM `Logs` where `replicated?` = 'N';"
 
@@ -111,20 +114,20 @@ def replicator_thread():
                 print("A Connection crashed; Something went wrong: {}".format(err))
         
         
-        if conn1.is_connected():
+        if conn1 and conn1.is_connected():
             conn1.close()
             c1.close()
 
-        if conn2.is_connected():
+        if conn2 and conn2.is_connected():
             conn2.close()
             c2.close()
 
-        if conn3.is_connected():
+        if conn3 and conn3.is_connected():
             conn3.close()
             c3.close()
         print("Round of Replication Completed.")
 
-        stop_event.wait(timeout = 120)
+        stop_event.wait(timeout = 60)
 def take_input():
     user_input = input("")
     print(" ")
